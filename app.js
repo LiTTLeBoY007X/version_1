@@ -7,12 +7,13 @@ const session = require('express-session');
 const MongoDBStore = require('connect-mongodb-session')(session);
 
 
+
 var indexRouter = require('./routes/index');
 
 var app = express();
 
 
-const MONGODB_URI = env.MONGODB_URI_Content;
+const MONGODB_URI = process.env.MONGODBURIContent;
 mongoose.connect(MONGODB_URI, { useNewUrlParser: true, useUnifiedTopology: true })
   .then(() => console.log('Connected to MongoDB Atlas'))
   .catch(err => console.error('Error connecting to MongoDB Atlas:', err));
@@ -20,7 +21,7 @@ mongoose.connect(MONGODB_URI, { useNewUrlParser: true, useUnifiedTopology: true 
 
 
 const store = new MongoDBStore({
-  uri: env.MONGODB_URI_sessionDB,
+  uri: process.env.MONGODBURISessionDB,
   collection: 'sessions'
 });
 app.use(session({
